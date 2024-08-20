@@ -1,14 +1,78 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Image, ScrollView, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import {images} from '../../constants'
+import CustomButton from './../../components/CustomButton'
+import FormField from '../../components/FormField';
+import { Link } from 'expo-router'
 
-const SignUp = () => {
+
+
+const SingnUp = () => {
+  const [form, setForm] = useState({
+    username: '',
+    email: '',
+    password: '',
+  })
+
+  const [isSubmitiong, setisSubmitiong] = useState(false)
+
+  const handeSubmit = () => {
+    console.log(form)
+  }
+
   return (
-    <View>
-      <Text>SignUp</Text>
-    </View>
+    <SafeAreaView className='bg-primary h-full'>
+      <ScrollView>
+        <View className='w-full justify-center min-h-[85vh] px-4 my-6'>
+          <Image
+            source={images.logo}
+            resizeMode='contain' 
+            className='w-[115px] h-[35px]'
+          />  
+          <Text className='text-2xl text-white mt-10 text-semibold font-psemibold'>
+            Sign Up to Aroa
+          </Text>
+          <FormField 
+            title={"Username"}
+            value={form.username}
+            handleChangeText={(e) => setForm({...form, username: e})}
+            otherStyle={'mt-7'}
+            placeholder={"Enter your username"}
+          />
+          <FormField 
+            title={"Email"}
+            value={form.email}
+            handleChangeText={(e) => setForm({...form, email: e})}
+            otherStyle={'mt-7'}
+            placeholder={"Enter your email address"}
+            keyboardType={'email-address'}
+          />
+          <FormField 
+            value={form.password}
+            title={"Password"}
+            handleChangeText={(e) => setForm({...form, password: e})}
+            placeholder={"Enter your password"}
+            otherStyle={'mt-7'}
+          />
+
+          <CustomButton
+            handlePress={handeSubmit}
+            containerStyle={'mt-7'}
+            isLoading={isSubmitiong}
+            title={"Sign Up"}
+          /> 
+          <View className='justify-center items-center pt-5 flex-row gap-2'>
+            <Text className='text-lg text-gray-100 font-pregular'>
+              Have an account already?
+            </Text>
+            <Link className='text-secondary text-lg font-psemibold' href={'/sign-in'}>Sign In</Link>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
-export default SignUp
+export default SingnUp
 
-const styles = StyleSheet.create({})
